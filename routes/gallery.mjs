@@ -1,8 +1,12 @@
-import express from 'express';
-import { galleryPage } from '../controllers/artController.mjs'; //esto trae la funcion que haga el controlador
 
-const router = express.Router();
+import {Router} from 'express';
 
-router.get('/gallery', galleryPage);
+const Galleryrouter = Router();
 
-export default router;
+Galleryrouter.get('/',(req,res)=>{
+
+    //lo que queremos que haga cuando soliciten el home
+})
+
+
+
