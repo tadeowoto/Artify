@@ -1,9 +1,10 @@
-import  express  from 'express';
-import { path, dirname } from 'node:path';
+import express from 'express';
+import  path  from 'node:path';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { homeRouter } from './routes/home.mjs';
-import {galleryRouter} from './routes/gallery.mjs';
-import {errorRouter} from './routes/error.mjs';
+import  homeRouter  from './routes/home.mjs';
+import  galleryRouter  from './routes/gallery.mjs';
+import  errorRouter  from './routes/error.mjs';
 
 
 const __fileName = fileURLToPath(import.meta.url); //URL del archivo actual
@@ -11,8 +12,10 @@ const __dirName = dirname(__fileName); // saca el directorio a partir de la URL 
 const app = express();
 const port = 3000;
 
+console.log(__dirName);
+
 //aca configuro la carpeta static
-app.use(express.static(path.join(__dirName), 'public'));
+//app.use(express.static(path.join(__dirName), 'public'));
 
 //configuro pug aca
 app.set('view engine','pug'); //le indicamos a express que motor de renderizado vamnos a usar

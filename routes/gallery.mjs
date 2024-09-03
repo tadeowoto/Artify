@@ -1,11 +1,11 @@
 
-import {Router} from 'express';
-import { getAll } from '../controllers/galleryController.mjs';
-const galleryRouter = Router();
+import express from 'express';
+import { Gallery } from '../controllers/galleryController.mjs';
+const galleryRouter = express.Router();
 
-galleryRouter.get('/gallery',getAll);
+galleryRouter.get('/gallery', Gallery.getAll);
 
-module.exports = galleryRouter;
+export default galleryRouter;
 
 
 
