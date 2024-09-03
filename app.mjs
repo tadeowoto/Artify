@@ -2,6 +2,8 @@ import  express  from 'express';
 import { path, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { homeRouter } from './routes/home.mjs';
+import {galleryRouter} from './routes/gallery.mjs';
+import {errorRouter} from './routes/error.mjs';
 
 
 const __fileName = fileURLToPath(import.meta.url); //URL del archivo actual
@@ -18,10 +20,10 @@ app.set('views', path.join(__dirname, 'views')); //le indicamos donde van a esta
 
 //llamo a la ruta de el home :)
 app.get('/', homeRouter);
+//ahora llamo a la ruta de gallery
+app.get('/gallery',galleryRouter);
 
-
-
-app.use(error.error404);
+app.use('*', errorRouter);
 
 app.listen(port, () => {
     console.log('Servidor funcionando en ',port);

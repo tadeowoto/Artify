@@ -1,12 +1,11 @@
 
 import {Router} from 'express';
+import { getAll } from '../controllers/galleryController.mjs';
+const galleryRouter = Router();
 
-const Galleryrouter = Router();
+galleryRouter.get('/gallery',getAll);
 
-Galleryrouter.get('/',(req,res)=>{
-
-    //lo que queremos que haga cuando soliciten el home
-})
+module.exports = galleryRouter;
 
 
 
