@@ -3,8 +3,12 @@ extends /layout/layout
 block content 
     section.main-section
         div.left-info
-            h1.main-title Bienvenido a Artify!
-            p.main.text Una app desarrollada para ver imagenes del museo de arte Metropolitano.
-            button.main-btn Vamos!   
+            div.left-container
+                div.title-description-wrapper  
+                    h1.main-title Bienvenido a Artify
+                        span.blue-hglt !
+                    p.main.text Una app desarrollada para ver imagenes del museo de arte Metropolitano.
+                button.gallery-button
+                    a(href='/gallery') Ir a la Galería   
         div.right-info
             img(src="/img/museum.jpg", alt="museo") 
