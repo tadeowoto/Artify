@@ -12,7 +12,6 @@ block content
                             option(value='American Decorative Arts') American Decorative Arts
                             option(value='Arms and Armor') Arms and Armor
                             option(value='Asian Art') Asian Art
-                        // Agrega más opciones según los departamentos disponibles
                     div.filter-group
                         label.header-label(for='keyword') Palabra clave:
                         input#keyword(type='text', name='keyword', placeholder='Buscar...')
@@ -23,5 +22,20 @@ block content
                             option(value='Europe') Europe
                             option(value='China') China
                             option(value='Paris') Paris
-                        // Agrega más opciones según las localizaciones disponibles
                     button.header-btn(type='submit') Filtrar
+
+
+    section.gallery-section
+        div.grid
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
+            include /partials/card
