@@ -1,1 +1,27 @@
 extends /layout/layout
+
+block content 
+    header.main-header
+        div.header-container
+            div.filter-container
+                form#filter-form
+                    div.filter-group
+                        label.header-label(for='department') Departamento:
+                        select#department(name='department')
+                            option(value='') Seleccionar
+                            option(value='American Decorative Arts') American Decorative Arts
+                            option(value='Arms and Armor') Arms and Armor
+                            option(value='Asian Art') Asian Art
+                        // Agrega más opciones según los departamentos disponibles
+                    div.filter-group
+                        label.header-label(for='keyword') Palabra clave:
+                        input#keyword(type='text', name='keyword', placeholder='Buscar...')
+                    div.filter-group
+                        label.header-label(for='location') Localización:
+                        select#location(name='location')
+                            option(value='') Seleccionar
+                            option(value='Europe') Europe
+                            option(value='China') China
+                            option(value='Paris') Paris
+                        // Agrega más opciones según las localizaciones disponibles
+                    button.header-btn(type='submit') Filtrar
