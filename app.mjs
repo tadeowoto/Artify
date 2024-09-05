@@ -2,7 +2,7 @@ import express from 'express';
 import  path  from 'node:path';
 import  homeRouter  from './routes/home.mjs';
 import  galleryRouter  from './routes/gallery.mjs';
-import  errorRouter  from './routes/error.mjs';
+//import  errorRouter  from './routes/error.mjs';
 
 const directorioName = path.dirname(new URL(import.meta.url).pathname).substring(1);
 //const directorioName = path.dirname(new URL(import.meta.url).pathname); //direccion de la carpeta del directorio
@@ -23,7 +23,7 @@ app.get('/', homeRouter);
 //ahora llamo a la ruta de gallery
 app.get('/gallery',galleryRouter);
 
-app.use('*', errorRouter);
+//app.use('*', errorRouter);
 
 app.listen(port, () => {
     console.log('Servidor funcionando en ',port);
