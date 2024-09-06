@@ -30,13 +30,13 @@ block content
                         if card.primaryImage  
                             img(src=card.primaryImage, alt=card.title)
                         else
-                            img(src='/img/nodisp.png', alt='Imagen no disponible'')
+                            img(src='/img/nodisp.png', alt='Imagen no disponible')
                     div.bottom-info
                         div.paint-title= card.title  
                         div.culture= card.culture    
                         if card.dynasty              
                             div.dynasty= card.dynasty
-                        else
+                        else 
                             div.dynasty= 'Sin información de dinastía'
                     div.btn-container
-                        button.card-btn Ver más
+                        button.card-btn(type="button") Ver más
