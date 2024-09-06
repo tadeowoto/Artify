@@ -28,21 +28,12 @@ export class Gallery {
         { departmentId: 19, displayName: "Photographs" },
         { departmentId: 21, displayName: "Modern Art" },
       ];
-
-      const locations = [
-        { locationId: 1, locationName: "Mexico" },
-        { locationId: 2, locationName: "Guatemala" },
-        { locationId: 3, locationName: "United States" },
-        { locationId: 4, locationName: "England" },
-        { locationId: 5, locationName: "Spain" },
-      ];
-
       
       const  { department, keyword, location } = req.query;
       if(department != undefined || keyword != undefined || location != undefined){
 
         if(department == undefined){
-          department = 0;
+          department = "";
         }
         if(keyword == undefined){
           keyword = '';
@@ -57,7 +48,6 @@ export class Gallery {
 
         res.render("gallery/gallery", {
           departments,
-          locations,
           cards: objetos,
         });
 
@@ -71,7 +61,6 @@ export class Gallery {
         const objetos = await getObjectDetails(ids);
         res.render("gallery/gallery", {
           departments,
-          locations,
           cards: objetos,
         });
       }
@@ -85,13 +74,50 @@ export class Gallery {
   }
 }
 
-async function getIdsFiltered(d,k,l){
+async function getIdsFiltered(d, k, l) {
+  // Empezamos con la URL base
+  let url = `https://collectionapi.metmuseum.org/public/collection/v1/search?`;
 
-  let url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?q=""&'
-  // /gallery?department=6&keyword=&location=
-  if(d != 0){
-    url = url+'departmentId='+d;
+  // Agregar el departamento si está presente
+  if (d) {
+    url += `departmentId=${d}&q=""`;
   }
+
+  // Agregar la palabra clave (keyword) si está presente
+  if (k) {
+    url += `&q=${encodeURIComponent(k)}`;
+  }
+
+  // Agregar la localización si está presente
+  if (l) {
+    url += `geoLocation=${encodeURIComponent(l)}&q=""`;
+  }
+
+  // Hacer el fetch con la URL construida
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!data.objectIDs || data.objectIDs.length === 0) {
+      console.log('No se encontraron objetos con los filtros aplicados.');
+      return [];
+    }
+
+    const ids = data.objectIDs.slice(0, 100); // Limitar a los primeros 100 IDs
+    ids.sort();  // Ordenar los IDs si es necesario
+    return ids;
+
+  } catch (error) {
+    console.error('Error al obtener los IDs:', error);
+    return [];
+  }
+}
+
+
+/* async function getIdsFiltered(d,k,l){
+
+  let url = `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${k}departmentId=${d}&geoLocation${l}`;
+  // /gallery?department=6&keyword=&location=
 
   const response = await fetch(url);
   const data = await response.json();
@@ -99,7 +125,7 @@ async function getIdsFiltered(d,k,l){
   ids.sort();
   return ids;
 }
-
+ */
 
 async function getObjectDetails(objectIDs) {
   const objectDetails = [];

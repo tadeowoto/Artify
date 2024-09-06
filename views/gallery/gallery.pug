@@ -16,10 +16,7 @@ block content
                         input#keyword(type='text', name='keyword', placeholder='Buscar...')
                     div.filter-group
                         label.header-label(for='location') Localización:
-                        select#location(name='location')
-                            option(value='') Seleccionar
-                            each location in locations  
-                                option(value=location.locationId)= location.locationName
+                        input#location(type='text', name='location', placeholder='Buscar...')
                     button.header-btn(type='submit') Filtrar
  
     section.gallery-section
