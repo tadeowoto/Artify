@@ -352,3 +352,45 @@ a.home-anchor {
     border: 1px solid var(--txt-color);
 }
 
+/* no results */
+.no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 10rem); 
+    text-align: center;
+    background-color: var(--bg-color); 
+    padding: 2rem;
+}
+
+.no-results-title {
+    font-family: var(--font-primary);
+    font-size: 3rem;
+    color: var(--hgh-color); 
+    margin-bottom: 1.5rem;
+}
+
+.no-results-p {
+    font-family: var(--font-secondary); 
+    font-size: 1.2rem;
+    color: var(--txt-color); 
+    margin-bottom: 2rem;
+}
+
+.no-results-anchor {
+    font-family: var(--font-primary);
+    padding: 2rem;
+    box-sizing: border-box;
+    background-color: var(--prm-color); 
+    color: var(--bg-color); 
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.no-results-anchor:hover {
+    background-color: var(--hgh-color); 
+    color: var(--bg-color); 
+    border: 1px solid var(--txt-color); /
+}
