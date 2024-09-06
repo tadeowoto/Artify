@@ -22,3 +22,21 @@ block content
                                 option(value=location.locationId)= location.locationName
                     button.header-btn(type='submit') Filtrar
  
+    section.gallery-section
+        div.grid
+            each card in cards  
+                div.card
+                    div.top-info
+                        if card.primaryImage  
+                            img(src=card.primaryImage, alt=card.title)
+                        else
+                            img(src='/img/nodisp.png', alt='Imagen no disponible'')
+                    div.bottom-info
+                        div.paint-title= card.title  
+                        div.culture= card.culture    
+                        if card.dynasty              
+                            div.dynasty= card.dynasty
+                        else
+                            div.dynasty= 'Sin información de dinastía'
+                    div.btn-container
+                        button.card-btn Ver más
