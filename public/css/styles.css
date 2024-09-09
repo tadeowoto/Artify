@@ -19,6 +19,7 @@ body {
     background-color: var(--bg-color);
     color: var(--txt-color);
 }
+
 .blue-hglt{
     color: var(--hgh-color);
 }
@@ -393,4 +394,127 @@ a.home-anchor {
     background-color: var(--hgh-color); 
     color: var(--bg-color); 
     border: 1px solid var(--txt-color); /
+}
+
+
+/* individual stylesssssss */
+
+.individual-gallery-section{
+    width: 100%;
+    height: calc(100vh - 10rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.left-images {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.main-image{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image img {
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.carrousel-images {
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem; 
+    margin-top: 10px;
+}
+
+.carrousel-images  img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.carrousel-images img:hover {
+    transform: scale(1.1); 
+}
+
+.carrousel-images img:hover {
+    transform: scale(1.1);
+}
+
+.notfound-img {
+    color: var(--scnd-color);
+    font-size: 0.9em;
+}
+
+.individual-right-info {
+    width: 40%;
+    height: 80%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 3.8rem;
+}
+
+.artist-container  {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    gap: 1rem;
+}
+
+.individual-title {
+    font-size: 2em;
+    font-family: var(--font-primary);
+    color: var(--txt-color);
+}
+
+.individual-artist {
+    font-size: 1.8rem;
+    font-family: var(--font-secondary);
+    color: var(--scnd-color);
+}
+
+.individual-year {
+    font-size: 1.3em;
+    color: var(--txt-color);
+    font-family: var(--font-secondary);
+}
+
+.tags-container {
+    margin-top: 20px;
+}
+
+.tags-ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tags-li {
+    background-color: var(--hgh-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font: var(--font-primary);
 }

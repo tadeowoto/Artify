@@ -89,6 +89,8 @@
         });
       }
       
+
+
       res.render("gallery/individual", { card: data });
        
     } catch (error) {

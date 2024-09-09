@@ -1,8 +1,24 @@
 extends /layout/layout
 
 block content
-  h1= card.title
-  img(src=card.primaryImage, alt=card.title)
-  p Dinastía: #{card.dynasty || 'Sin información'}
-  p Cultura: #{card.culture || 'Sin información'}
-
+  section.individual-gallery-section
+    div.left-images
+        div.main-image
+            img(src=`${card.primaryImage}`, alt="")
+        div.carrousel-images
+            if card.additionalImages && card.additionalImages.length > 0
+                each image in card.additionalImages
+                    img(src=image, alt=`Imagen adicional de ${card.title}`)
+            else
+                p.notfound-img No hay imágenes adicionales disponibles.
+    div.individual-right-info
+        div.artist-container
+            h1.individual-title= card.title || ''
+            h2.individual-artist= `Year: ${card.constituents.name}` 
+            h3.individual-year= card.objectDate
+        div.tags-container
+            ul.tags-ul 
+                li.tags-li= card.tags.term || 'tags no disp'   
+                li.tags-li= card.dinasty || 'tags no disp'
+                li.tags-li= card.reign || 'tags no disp'
+                li.tags-li= card.city || 'tags no disp'
