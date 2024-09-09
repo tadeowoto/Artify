@@ -120,6 +120,8 @@ async function getObjectDetails(objectIDs) {
     );
     const data = await response.json();
 
+    
+
     objectDetails.push(data);
   }
   return objectDetails;

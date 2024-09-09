@@ -23,9 +23,9 @@ block content
         div.grid
             each card in cards  
                 div.card
-                    div.top-info
-                        if card.primaryImage  
-                            img(src=card.primaryImage, alt=card.title)
+                    div.top-info(data-year=`${card.objectDate || 'No hay fecha disponible'}`)
+                        if card.primaryImageSmall  
+                            img(src=card.primaryImageSmall, alt=card.title)
                         else
                             img(src='/img/nodisp.png', alt='Imagen no disponible')
                     div.bottom-info
