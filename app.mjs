@@ -21,7 +21,7 @@ app.locals.basedir = path.join(directorioName, 'views');
 //llamo a la ruta de el home :)
 app.get('/', homeRouter);
 //ahora llamo a la ruta de gallery
-app.get('/gallery',galleryRouter);
+app.use('/gallery',galleryRouter);
 
 //app.use('*', errorRouter);
 

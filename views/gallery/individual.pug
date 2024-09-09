@@ -1,0 +1,8 @@
+extends /layout/layout
+
+block content
+  h1= card.title
+  img(src=card.primaryImage, alt=card.title)
+  p Dinastía: #{card.dynasty || 'Sin información'}
+  p Cultura: #{card.culture || 'Sin información'}
+

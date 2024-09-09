@@ -73,6 +73,32 @@
       res.status(500).send("Hubo un error al cargar la galería.");
     }
   }
+
+  static async getIndividual(req, res) {
+
+    const id = req.params.id;
+    
+    try {
+      const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (!data) {
+        return res.status(404).render('gallery/no-results', {
+          message: 'No se encontró el objeto especificado.'
+        });
+      }
+      
+      res.render("gallery/individual", { card: data });
+       
+    } catch (error) {
+      console.error('Error al obtener los datos del objeto:', error);
+      res.status(500).send('Error al cargar el objeto individual.');
+    }
+    
+  }
+
+
 }
 
 async function getIdsFiltered(d, k, l) {
