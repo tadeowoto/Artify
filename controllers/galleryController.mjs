@@ -90,7 +90,7 @@
       }
       
 
-
+      console.log(data)
       res.render("gallery/individual", { card: data });
        
     } catch (error) {

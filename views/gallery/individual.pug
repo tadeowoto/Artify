@@ -4,21 +4,21 @@ block content
   section.individual-gallery-section
     div.left-images
         div.main-image
-            img(src=`${card.primaryImage}`, alt="")
+            img(id="main-image", src=`${card.primaryImage}`, alt="")
         div.carrousel-images
             if card.additionalImages && card.additionalImages.length > 0
                 each image in card.additionalImages
-                    img(src=image, alt=`Imagen adicional de ${card.title}`)
+                    img(class="carousel-image", src=image, alt=`Imagen adicional de ${card.title}`)
             else
                 p.notfound-img No hay imágenes adicionales disponibles.
     div.individual-right-info
         div.artist-container
             h1.individual-title= card.title || ''
-            h2.individual-artist= `Year: ${card.constituents.name}` 
+            h2.individual-artist= `Year: ${card.constituents.name}` || ''
             h3.individual-year= card.objectDate
         div.tags-container
             ul.tags-ul 
-                li.tags-li= card.tags.term || 'tags no disp'   
-                li.tags-li= card.dinasty || 'tags no disp'
-                li.tags-li= card.reign || 'tags no disp'
-                li.tags-li= card.city || 'tags no disp'
+                li.tags-li= card.department || 'tags no disp'   
+                li.tags-li= card.objectName || 'tags no disp'
+                li.tags-li= card.culture || 'tags no disp'
+                li.tags-li= card.artistNationality || 'tags no disp'

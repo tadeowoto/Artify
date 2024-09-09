@@ -424,7 +424,7 @@ a.home-anchor {
 }
 
 .main-image img {
-    width: 80%;
+    width: 20rem;
     height: auto;
     border-radius: 10px;
     object-fit: cover;
@@ -437,11 +437,12 @@ a.home-anchor {
     justify-content: center;
     gap: 3rem; 
     margin-top: 10px;
+    overflow: scroll;
 }
 
 .carrousel-images  img {
-    width: 6rem;
-    height: 6rem;
+    width: 5.4rem;
+    height: 5.4rem;
     object-fit: cover;
     border-radius: 8px;
     transition: transform 0.3s ease-in-out;
