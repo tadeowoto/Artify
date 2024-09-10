@@ -1,3 +1,5 @@
+import translate from '../services/translate-bridge.cjs';
+ 
  export class Gallery {
   static async getAll(req, res) {
     try {
@@ -28,8 +30,8 @@
         { departmentId: 19, displayName: "Photographs" },
         { departmentId: 21, displayName: "Modern Art" },
       ];
-
-      const { department, keyword, location } = req.query;
+      
+      const { department, keyword, location, lang } = req.query;
       if ( department != undefined || keyword != undefined || location != undefined) {
         if (department == undefined) {
           department = "";
@@ -50,9 +52,16 @@
           });
         } else {
           const objetos = await getObjectDetails(idsFiltrados);
+
+          const translatedCards = await Promise.all(objetos.map(async (obj) => {
+            const translatedTitle = await translate({ source:'en', text: obj.title, target: 'es' }); // Cambiado
+            return { ...obj, title: translatedTitle };
+          }));
+
+
           res.render("gallery/gallery", {
             departments,
-            cards: objetos,
+            cards: translatedCards,
           });
         }
       } else {
@@ -63,9 +72,15 @@
         const ids = data.objectIDs.slice(0, 100); // Limitar a 100 IDs para no sobrecargar la API
         ids.sort();
         const objetos = await getObjectDetails(ids);
+
+        const translatedCards = await Promise.all(objetos.map(async (obj) => {
+          const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' }); // Cambiado
+          return { ...obj, title: translatedTitle };
+        }));
+
         res.render("gallery/gallery", {
           departments,
-          cards: objetos,
+          cards: translatedCards,
         });
       }
     } catch (error) {
@@ -88,10 +103,11 @@
           message: 'No se encontró el objeto especificado.'
         });
       }
-      
 
-      console.log(data)
-      res.render("gallery/individual", { card: data });
+      const translatedTitle = await translate({source:'en', text: data.title, target: req.query.lang || 'es' }); // Cambiado
+      data.title = translatedTitle;
+
+     res.render("gallery/individual", { card: data });
        
     } catch (error) {
       console.error('Error al obtener los datos del objeto:', error);
