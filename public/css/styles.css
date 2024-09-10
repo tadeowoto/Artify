@@ -519,3 +519,42 @@ a.home-anchor {
     font-size: 1rem;
     font: var(--font-primary);
 }
+
+/* paginacion */
+.pagination-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .pagination {
+    display: inline-block;
+  }
+  
+  .pagination-link, .disabled {
+    margin: 0 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    color: #333;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination-link:hover {
+    background-color: #f1f1f1;
+    border-color: #aaa;
+  }
+  
+  .active {
+    background-color: #007bff; /* O el color que prefieras */
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+  }
+  
+  .disabled {
+    color: #aaa;
+    pointer-events: none;
+    border-color: #ddd;
+  }

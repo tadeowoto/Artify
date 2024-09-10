@@ -32,7 +32,9 @@ import translate from '../services/translate-bridge.cjs';
         { departmentId: 21, displayName: "Modern Art" },
       ];
       
-      const { department, keyword, location, lang } = req.query;
+      const { department, keyword, location, lang, page = 1 } = req.query;
+      const limit = 20;
+
       if ( department != undefined || keyword != undefined || location != undefined) {
         if (department == undefined) {
           department = "";
@@ -55,10 +57,13 @@ import translate from '../services/translate-bridge.cjs';
           const objetos = await getObjectDetails(idsFiltrados);
 
           const translatedCards = await Promise.all(objetos.map(async (obj) => {
-            const translatedTitle = await translate({ source:'en', text: obj.title, target: 'es' });
-            return { ...obj, title: translatedTitle };
+            const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' });
+            const translatedCulture = await translate({source:'en', text: obj.culture || 'no culture', target: lang || 'es' });
+            const translatedDinasty = await translate({source:'en', text: obj.dynasty || 'no dynasty', target: lang || 'es' }); 
+            return { ...obj, title: translatedTitle, culture: translatedCulture, dynasty: translatedDinasty };
           }));
 
+          
 
           res.render("gallery/gallery", {
             departments,
@@ -74,10 +79,12 @@ import translate from '../services/translate-bridge.cjs';
         const objetos = await getObjectDetails(ids);
 
         const translatedCards = await Promise.all(objetos.map(async (obj) => {
-          const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' }); 
-          return { ...obj, title: translatedTitle };
+          const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' });
+          const translatedCulture = await translate({source:'en', text: obj.culture || 'no culture', target: lang || 'es' });
+          const translatedDinasty = await translate({source:'en', text: obj.dynasty || 'no dynasty', target: lang || 'es' }); 
+          return { ...obj, title: translatedTitle, culture: translatedCulture, dynasty: translatedDinasty };
         }));
-
+        console.log(translatedCards)
         res.render("gallery/gallery", {
           departments,
           cards: translatedCards,
@@ -104,8 +111,16 @@ import translate from '../services/translate-bridge.cjs';
         });
       }
 
-      const translatedTitle = await translate({source:'en', text: data.title, target: req.query.lang || 'es' }); 
+      const translatedTitle = await translate({source:'en', text: data.title, target: req.query.lang || 'es' });
+      const translatedDepartment = await translate({source:'en', text: data.department || 'tags no disp', target: req.query.lang || 'es' });
+      const translatedObjectName = await translate({source:'en', text: data.objectName || 'tags no disp', target: req.query.lang || 'es' });
+      const translatedCulture = await translate({source:'en', text: data.culture || 'tags no disp', target: req.query.lang || 'es' });
+      const translatedArtistNationality = await translate({source:'en', text: data.artistNacionality || 'tags no disp', target: req.query.lang || 'es' });  
       data.title = translatedTitle;
+      data.department = translatedDepartment;
+      data.objectName = translatedObjectName;
+      data.culture = translatedCulture;
+      data.artistNacionality = translatedArtistNationality;
 
      res.render("gallery/individual", { card: data });
        
@@ -155,7 +170,7 @@ async function getIdsFiltered(d, k, l) {
   }
 }
 
-//un saludo al profe que mira los comentarios ;)
+//un saludo al profe que mira los comentarios  
 async function getObjectDetails(objectIDs) {
   const objectDetails = [];
   for (let i = 0; i < 20; i++) {

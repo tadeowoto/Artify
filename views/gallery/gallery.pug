@@ -37,3 +37,17 @@ block content
                             div.dynasty= 'Sin información de dinastía'
                     div.btn-container
                         a.card-btn(href=`/gallery/${card.objectID}`) Ver más
+                        
+    
+        if totalPages > 1
+            nav.pagination-container
+                ul.pagination-list
+                    if currentPage > 1
+                        li.pagination-item
+                            a(href=`/gallery?page=${currentPage - 1}`) « Anterior
+                    each pageNumber in [...Array(totalPages).keys()].map(x => x + 1)
+                        li.pagination-item(class=(pageNumber == currentPage ? 'active' : ''))
+                            a(href=`/gallery?page=${pageNumber}`)= pageNumber
+                    if currentPage < totalPages
+                        li.pagination-item
+                            a(href=`/gallery?page=${currentPage + 1}`) Siguiente »
