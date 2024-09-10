@@ -521,40 +521,25 @@ a.home-anchor {
 }
 
 /* paginacion */
-.pagination-container {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .pagination {
-    display: inline-block;
-  }
-  
-  .pagination-link, .disabled {
-    margin: 0 5px;
-    padding: 10px 15px;
-    font-size: 16px;
+.pagination-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-list{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 1rem;
+    list-style: none;
+}
+
+.pagination-item a{
     text-decoration: none;
-    border: 1px solid #ddd;
-    color: #333;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .pagination-link:hover {
-    background-color: #f1f1f1;
-    border-color: #aaa;
-  }
-  
-  .active {
-    background-color: #007bff; /* O el color que prefieras */
-    color: white;
-    border-color: #007bff;
-    cursor: default;
-  }
-  
-  .disabled {
-    color: #aaa;
-    pointer-events: none;
-    border-color: #ddd;
-  }
+    color: var(--txt-color);
+    font-size: var(--font-primary);
+}

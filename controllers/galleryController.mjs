@@ -34,6 +34,10 @@ import translate from '../services/translate-bridge.cjs';
       
       const { department, keyword, location, lang, page = 1 } = req.query;
       const limit = 20;
+      const startIndex = (page - 1) * limit;
+      const endIndex = page * limit;
+
+
 
       if ( department != undefined || keyword != undefined || location != undefined) {
         if (department == undefined) {
@@ -54,40 +58,52 @@ import translate from '../services/translate-bridge.cjs';
             departments,
           });
         } else {
-          const objetos = await getObjectDetails(idsFiltrados);
 
+          const paginatedIds = idsFiltrados.slice(startIndex, endIndex);
+          const objetos = await getObjectDetails(paginatedIds);
+          
           const translatedCards = await Promise.all(objetos.map(async (obj) => {
-            const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' });
+            const translatedTitle = await translate({source:'en', text: obj.title || 'no title', target: lang || 'es' });
             const translatedCulture = await translate({source:'en', text: obj.culture || 'no culture', target: lang || 'es' });
             const translatedDinasty = await translate({source:'en', text: obj.dynasty || 'no dynasty', target: lang || 'es' }); 
             return { ...obj, title: translatedTitle, culture: translatedCulture, dynasty: translatedDinasty };
           }));
 
-          
-
           res.render("gallery/gallery", {
             departments,
             cards: translatedCards,
+            currentPage: page,
+            totalPages: Math.ceil(idsFiltrados.length / limit),
           });
+
+          /* res.render("gallery/gallery", {
+            departments,
+            cards: translatedCards,
+          }); */
         }
       } else {
         let url ='https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=""';
         const response = await fetch(url);
         const data = await response.json(); //data tiene todos los ids de la url
-        const ids = data.objectIDs.slice(0, 100); // Limitar a 100 IDs para no sobrecargar la API
-        ids.sort();
-        const objetos = await getObjectDetails(ids);
+        const ids = data.objectIDs.slice(0, 100);// Limitar a 100 IDs para no sobrecargar la API
+        ids.sort(); 
+        const paginatedIds = ids.slice(startIndex, endIndex);
+        const objetos = await getObjectDetails(paginatedIds);
 
         const translatedCards = await Promise.all(objetos.map(async (obj) => {
-          const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' });
+          const translatedTitle = await translate({source:'en', text: obj.title || 'no title', target: lang || 'es' });
           const translatedCulture = await translate({source:'en', text: obj.culture || 'no culture', target: lang || 'es' });
           const translatedDinasty = await translate({source:'en', text: obj.dynasty || 'no dynasty', target: lang || 'es' }); 
           return { ...obj, title: translatedTitle, culture: translatedCulture, dynasty: translatedDinasty };
         }));
-        console.log(translatedCards)
+
+        //profe aca limito las pagina ya que la API trae objetos sin nada y lo unico que hace es hacer demasiadas paginas sin absolutamente nada de informacion.
+        const totalPages = 20;
         res.render("gallery/gallery", {
           departments,
           cards: translatedCards,
+          currentPage: page,
+          totalPages,
         });
       }
     } catch (error) {
@@ -111,7 +127,7 @@ import translate from '../services/translate-bridge.cjs';
         });
       }
 
-      const translatedTitle = await translate({source:'en', text: data.title, target: req.query.lang || 'es' });
+      const translatedTitle = await translate({source:'en', text: data.title || 'no title', target: req.query.lang || 'es' });
       const translatedDepartment = await translate({source:'en', text: data.department || 'tags no disp', target: req.query.lang || 'es' });
       const translatedObjectName = await translate({source:'en', text: data.objectName || 'tags no disp', target: req.query.lang || 'es' });
       const translatedCulture = await translate({source:'en', text: data.culture || 'tags no disp', target: req.query.lang || 'es' });
