@@ -3,6 +3,7 @@ import translate from '../services/translate-bridge.cjs';
  export class Gallery {
   static async getAll(req, res) {
     try {
+      //tengo esto en un array para no hacer mas fetch y hacer todavia mas lenta la pagina :)
       const departments = [
         { departmentId: 1, displayName: "American Decorative Arts" },
         { departmentId: 3, displayName: "Ancient Near Eastern Art" },
@@ -54,7 +55,7 @@ import translate from '../services/translate-bridge.cjs';
           const objetos = await getObjectDetails(idsFiltrados);
 
           const translatedCards = await Promise.all(objetos.map(async (obj) => {
-            const translatedTitle = await translate({ source:'en', text: obj.title, target: 'es' }); // Cambiado
+            const translatedTitle = await translate({ source:'en', text: obj.title, target: 'es' });
             return { ...obj, title: translatedTitle };
           }));
 
@@ -65,7 +66,6 @@ import translate from '../services/translate-bridge.cjs';
           });
         }
       } else {
-        // Construir la URL de consulta con parámetros de filtro
         let url ='https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=""';
         const response = await fetch(url);
         const data = await response.json(); //data tiene todos los ids de la url
@@ -74,7 +74,7 @@ import translate from '../services/translate-bridge.cjs';
         const objetos = await getObjectDetails(ids);
 
         const translatedCards = await Promise.all(objetos.map(async (obj) => {
-          const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' }); // Cambiado
+          const translatedTitle = await translate({source:'en', text: obj.title, target: lang || 'es' }); 
           return { ...obj, title: translatedTitle };
         }));
 
@@ -104,7 +104,7 @@ import translate from '../services/translate-bridge.cjs';
         });
       }
 
-      const translatedTitle = await translate({source:'en', text: data.title, target: req.query.lang || 'es' }); // Cambiado
+      const translatedTitle = await translate({source:'en', text: data.title, target: req.query.lang || 'es' }); 
       data.title = translatedTitle;
 
      res.render("gallery/individual", { card: data });
@@ -155,6 +155,7 @@ async function getIdsFiltered(d, k, l) {
   }
 }
 
+//un saludo al profe que mira los comentarios ;)
 async function getObjectDetails(objectIDs) {
   const objectDetails = [];
   for (let i = 0; i < 20; i++) {
