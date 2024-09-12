@@ -7,7 +7,7 @@ import  errorRouter  from './routes/error.mjs';
 const directorioName = path.dirname(new URL(import.meta.url).pathname).substring(1);
 //const directorioName = path.dirname(new URL(import.meta.url).pathname); //direccion de la carpeta del directorio
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 //aca configuro la carpeta public de los archivos estaticos
