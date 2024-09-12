@@ -76,10 +76,7 @@ import translate from '../services/translate-bridge.cjs';
             totalPages: Math.ceil(idsFiltrados.length / limit),
           });
 
-          /* res.render("gallery/gallery", {
-            departments,
-            cards: translatedCards,
-          }); */
+
         }
       } else {
         let url ='https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=""';
