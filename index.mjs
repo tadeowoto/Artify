@@ -10,8 +10,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 
+
 //aca configuro la carpeta public de los archivos estaticos
 app.use(express.static(path.join(directorioName, 'public')));
+
 
 //configuro pug aca
 app.set('view engine','pug'); //le indicamos a express que motor de renderizado vamnos a usar
@@ -24,6 +26,11 @@ app.get('/', homeRouter);
 app.use('/gallery',galleryRouter);
 
 app.use('*', errorRouter);
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Algo salió mal!');
+});
 
 app.listen(port, () => {
     console.log('Servidor funcionando en ',port);
