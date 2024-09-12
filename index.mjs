@@ -28,3 +28,5 @@ app.use('*', errorRouter);
 app.listen(port, () => {
     console.log('Servidor funcionando en ',port);
 });
+
+export default app;
