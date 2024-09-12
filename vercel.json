@@ -3,7 +3,7 @@
     "builds": [
 
         {
-            "src": "index.mjs",
+            "src": "./index.mjs",
             "use": "@vercel/node"
         }
 
