@@ -4,7 +4,7 @@ import  homeRouter  from './routes/home.mjs';
 import  galleryRouter  from './routes/gallery.mjs';
 import  errorRouter  from './routes/error.mjs';
 
-const directorioName = path.dirname(new URL(import.meta.url).pathname).substring(1);
+const directorioName = path.dirname(new URL(import.meta.url).pathname);
 //const directorioName = path.dirname(new URL(import.meta.url).pathname); //direccion de la carpeta del directorio
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,19 +21,13 @@ app.set('views', path.join(directorioName, 'views'));//le indicamos donde van a 
 app.locals.basedir = path.join(directorioName, 'views'); 
 
 //llamo a la ruta de el home :)
-app.get('/', homeRouter);
+app.use('/', homeRouter);
 //ahora llamo a la ruta de gallery
 app.use('/gallery',galleryRouter);
 
 app.use('*', errorRouter);
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Algo salió mal!');
-});
 
 app.listen(port, () => {
     console.log('Servidor funcionando en ',port);
 });
-
-export default app;
