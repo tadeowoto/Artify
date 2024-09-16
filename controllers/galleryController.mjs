@@ -79,10 +79,14 @@ import translate from '../services/translate-bridge.cjs';
 
         }
       } else {
-        let url ='https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=""';
-        const response = await fetch(url);
-        const data = await response.json(); //data tiene todos los ids de la url
-        const ids = data.objectIDs.slice(0, 100);// Limitar a 100 IDs para no sobrecargar la API
+        //let url ='https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=""';
+        
+
+        //const response = await fetch(url);
+        //const data = await response.json(); //data tiene todos los ids de la url
+        //op2 hardcodear en vez de hacer el fetch a la url (un arreglo con 100 numeros random )
+        let ids = Array.from({length: 1000}, () => Math.floor(Math.random() * 100) + 1);
+        //const ids = data.objectIDs.slice(0, 100);// Limitar a 100 IDs para no sobrecargar la API
         ids.sort(); 
         const paginatedIds = ids.slice(startIndex, endIndex);
         const objetos = await getObjectDetails(paginatedIds);
@@ -95,12 +99,12 @@ import translate from '../services/translate-bridge.cjs';
         }));
 
         //profe aca limito las pagina ya que la API trae objetos sin nada y lo unico que hace es hacer demasiadas paginas sin absolutamente nada de informacion.
-        const totalPages = 20;
+        //const totalPages = 20;
         res.render("gallery/gallery", {
           departments,
           cards: translatedCards,
           currentPage: page,
-          totalPages,
+          totalPages: Math.ceil(ids.length / limit),
         });
       }
     } catch (error) {
@@ -115,7 +119,7 @@ import translate from '../services/translate-bridge.cjs';
     
     try {
       const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-      // https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 esta no romperia PEEEEEERO solo trae los del dep 1
+      // https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 esta no romperia PEEEEEERO solo
       const response = await fetch(url);
       const data = await response.json();
 

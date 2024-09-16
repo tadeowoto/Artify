@@ -4,27 +4,23 @@ import  homeRouter  from './routes/home.mjs';
 import  galleryRouter  from './routes/gallery.mjs';
 import  errorRouter  from './routes/error.mjs';
 
-const directorioName = path.dirname(new URL(import.meta.url).pathname);
-//const directorioName = path.dirname(new URL(import.meta.url).pathname); //direccion de la carpeta del directorio
+//const directorioName = path.dirname(new URL(import.meta.url).pathname);
+const directorioName = path.dirname(new URL(import.meta.url).pathname).slice(1); //direccion de la carpeta del directoriolocal
 const app = express();
 const port = process.env.PORT || 3000;
 
 
-
-//aca configuro la carpeta public de los archivos estaticos
 app.use(express.static(path.join(directorioName, 'public')));
 
 
-//configuro pug aca
-app.set('view engine','pug'); //le indicamos a express que motor de renderizado vamnos a usar
-app.set('views', path.join(directorioName, 'views'));//le indicamos donde van a estar las vistas
+
+app.set('view engine','pug'); 
+app.set('views', path.join(directorioName, 'views'));
 app.locals.basedir = path.join(directorioName, 'views'); 
 
-//llamo a la ruta de el home :)
-app.use('/', homeRouter);
-//ahora llamo a la ruta de gallery
-app.use('/gallery',galleryRouter);
 
+app.use('/', homeRouter);
+app.use('/gallery',galleryRouter);
 app.use('*', errorRouter);
 
 
