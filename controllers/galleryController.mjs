@@ -115,6 +115,7 @@ import translate from '../services/translate-bridge.cjs';
     
     try {
       const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+      // https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 esta no romperia PEEEEEERO solo trae los del dep 1
       const response = await fetch(url);
       const data = await response.json();
 
