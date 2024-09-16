@@ -79,14 +79,17 @@ import translate from '../services/translate-bridge.cjs';
 
         }
       } else {
+        // https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 esta no romperia PEEEEEERO viene con el depa 1 :/
         //let url ='https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=""';
-        
+        let url = `https://collectionapi.metmuseum.org/public/collection/v1/search?q="sunflowers"`;
+        //DISCLEIMER PROFE :) TENGO QUE APUNTAR A ESTE ENDPONIT PQ SINO VERCEL CON SU PLAN GRATUITO NO CARGA TODOS LOS OBJETOS DEL ENPOINT QUE TRAE TODO LOS OBJETOS :))))))
+        const response = await fetch(url);
+        const data = await response.json(); //data tiene todos los ids de la url
 
-        //const response = await fetch(url);
-        //const data = await response.json(); //data tiene todos los ids de la url
         //op2 hardcodear en vez de hacer el fetch a la url (un arreglo con 100 numeros random )
-        let ids = Array.from({length: 1000}, () => Math.floor(Math.random() * 100) + 1);
-        //const ids = data.objectIDs.slice(0, 100);// Limitar a 100 IDs para no sobrecargar la API
+        //let ids = Array.from({length: 1000}, () => Math.floor(Math.random() * 100) + 1);
+
+        const ids = data.objectIDs.slice(0, 100);// Limitar a 100 IDs para no sobrecargar la API
         ids.sort(); 
         const paginatedIds = ids.slice(startIndex, endIndex);
         const objetos = await getObjectDetails(paginatedIds);
@@ -99,12 +102,12 @@ import translate from '../services/translate-bridge.cjs';
         }));
 
         //profe aca limito las pagina ya que la API trae objetos sin nada y lo unico que hace es hacer demasiadas paginas sin absolutamente nada de informacion.
-        //const totalPages = 20;
+        const totalPages = 5;
         res.render("gallery/gallery", {
           departments,
           cards: translatedCards,
           currentPage: page,
-          totalPages: Math.ceil(ids.length / limit),
+          totalPages,
         });
       }
     } catch (error) {
@@ -119,7 +122,7 @@ import translate from '../services/translate-bridge.cjs';
     
     try {
       const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-      // https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1 esta no romperia PEEEEEERO solo
+      
       const response = await fetch(url);
       const data = await response.json();
 
@@ -191,7 +194,7 @@ async function getIdsFiltered(d, k, l) {
 //un saludo al profe que mira los comentarios  
 async function getObjectDetails(objectIDs) {
   const objectDetails = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < objectIDs.length; i++) {
     const objectID = objectIDs[i];
     const response = await fetch(
       `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`
